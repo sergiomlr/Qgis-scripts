@@ -1,0 +1,22 @@
+#Loop running IDW in QGIS
+#Inverse Distance Weighted (IDW) interpolation of a point vector layer
+
+Algorithm ID: qgis:idwinterpolation
+
+#Method to run in QGIS console
+import processing
+processing.run("algorithm_id", {parameter_dictionary})
+
+
+#Example which runs IWD interpolation in a loop over the monthly ET0 of a vector
+
+for i in range(1,13,1):
+    interpolation_data = '/home/sergio/PycharmProjects/PSA/SWY_veracruz/Intermediate/eto_fao_utm.shp::~::0::~::'+str(i)+'::~::0'
+    output = '/home/sergio/PycharmProjects/PSA/SWY_ver/ET0_monthly_fao/ET0_'+str(i)+ '.tif'
+    processing.run("qgis:idwinterpolation",
+{ 'DISTANCE_COEFFICIENT' : 2,
+ 'EXTENT' : '694345.3262,719455.3262,2149149.6164,2164164.6164 [EPSG:32614]',
+ 'INTERPOLATION_DATA' : interpolation_data,
+ 'OUTPUT' : output, 
+  'PIXEL_SIZE' : 15 }
+  )
